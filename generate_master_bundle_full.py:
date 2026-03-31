@@ -79,3 +79,4 @@ if __name__ == "__main__":
     generate_pptx()
     print("\nAll files successfully generated in folder:", OUTPUT_DIR.resolve())
     print("Ready to upload to GitHub pre-release!")
+    python3 generate_master_bundle_full.py
