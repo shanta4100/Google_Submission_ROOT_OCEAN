@@ -73,3 +73,4 @@ if __name__ == "__main__":
     generate_excel()
     generate_pptx()
     print("\nAll files generated successfully!")
+    chmod +x generate_master_bundle.sh
