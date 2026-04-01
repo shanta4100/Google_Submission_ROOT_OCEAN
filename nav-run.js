@@ -21,3 +21,5 @@ const panel = ui.generateAsciiUI({
 
 // Output to terminal
 console.log(panel);
+node nav-run.js "take me to the beach" SESSION123 awake
+
