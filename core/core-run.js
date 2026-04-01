@@ -1,84 +1,64 @@
-// ops/mesh/v-sleeping-agent.js
-// Tiny AI Sleeping Agent
-// Light wrapper around CORE + COE that only runs when you tell it to.
-// No autonomy beyond what your commands allow.
+// core/core-run.js
+// Command-line runner for the Tiny AI Sleeping Agent + CORE + COE.
+// This is the file you run with:
+//   node core-run.js agent awake
+//   node core-run.js agent sleep
+//   node core-run.js agent dream
+//   node core-run.js core auto
+//   node core-run.js coe daily
 
-const core = require("../../core/v-core-engine");
-const coe = require("./v-continuous-operation-engine");
+const sleepingAgent = require("../ops/mesh/v-sleeping-agent");
+const core = require("./v-core-engine");
+const coe = require("../ops/mesh/v-continuous-operation-engine");
 
-// Simple state holder (in-memory only)
-let AGENT_STATE = {
-  mode: "sleep",   // "sleep" | "awake" | "dream"
-  lastRun: null
-};
+// Read CLI arguments
+const args = process.argv.slice(2);
+const mainCommand = args[0] || "info";
+const subCommand = args[1] || null;
 
-function setMode(mode) {
-  if (!["sleep", "awake", "dream"].includes(mode)) {
-    throw new Error("Invalid mode for sleeping agent.");
-  }
-  AGENT_STATE.mode = mode;
-  return { status: "OK", mode };
-}
-
-function tick() {
-  const now = new Date().toISOString();
-  let result;
-
-  switch (AGENT_STATE.mode) {
-    case "sleep":
-      // Minimal ping, nothing heavy
-      result = coe.runSleepCheck();
+function run() {
+  switch (mainCommand) {
+    // ---------------------------------------------------------
+    // TINY AI SLEEPING AGENT COMMANDS
+    // ---------------------------------------------------------
+    case "agent":
+      if (subCommand === "awake") {
+        console.log(JSON.stringify(sleepingAgent.playOnceAwake(), null, 2));
+      } else if (subCommand === "dream") {
+        console.log(JSON.stringify(sleepingAgent.playOnceDream(), null, 2));
+      } else if (subCommand === "sleep") {
+        console.log(JSON.stringify(sleepingAgent.stopAndSleep(), null, 2));
+      } else {
+        console.log("Usage: node core-run.js agent [awake|dream|sleep]");
+      }
       break;
 
-    case "awake":
-      // Light operational work: trigger cycle
-      result = coe.runTriggerCycle("agent-awake");
+    // ---------------------------------------------------------
+    // CORE ENGINE COMMANDS
+    // ---------------------------------------------------------
+    case "core":
+      console.log(JSON.stringify(core.tick({ mode: subCommand || "info" }), null, 2));
       break;
 
-    case "dream":
-      // Use CORE auto mode: best preset + dashboard + COE daily
-      result = core.tick({ mode: "auto" });
+    // ---------------------------------------------------------
+    // COE (Continuous Operation Engine)
+    // ---------------------------------------------------------
+    case "coe":
+      console.log(JSON.stringify(coe.tick({ mode: subCommand || "daily" }), null, 2));
       break;
 
+    // ---------------------------------------------------------
+    // DEFAULT
+    // ---------------------------------------------------------
     default:
-      result = { status: "OK", note: "Unknown mode, doing nothing." };
+      console.log("Commands:");
+      console.log("  node core-run.js agent awake");
+      console.log("  node core-run.js agent sleep");
+      console.log("  node core-run.js agent dream");
+      console.log("  node core-run.js core auto");
+      console.log("  node core-run.js coe daily");
+      break;
   }
-
-  AGENT_STATE.lastRun = now;
-
-  return {
-    status: "OK",
-    note: `Sleeping agent tick in mode: ${AGENT_STATE.mode}`,
-    time: now,
-    state: AGENT_STATE,
-    result
-  };
 }
 
-// Manual “play” commands – always under your control
-function playOnceAwake() {
-  setMode("awake");
-  return tick();
-}
-
-function playOnceDream() {
-  setMode("dream");
-  return tick();
-}
-
-function stopAndSleep() {
-  setMode("sleep");
-  return {
-    status: "OK",
-    note: "Agent put to sleep by user command.",
-    state: AGENT_STATE
-  };
-}
-
-module.exports = {
-  setMode,
-  tick,
-  playOnceAwake,
-  playOnceDream,
-  stopAndSleep
-};
+run();
