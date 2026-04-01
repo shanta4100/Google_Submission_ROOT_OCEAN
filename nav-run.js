@@ -23,4 +23,5 @@ const panel = ui.generateAsciiUI({
 console.log(panel);
 node nav-run.js "take me to the beach" SESSION123 awake
 node nav-run.js "take me to the stadium" SESSION123 awake
+node nav-run.js "show me the status" SESSION123 sleep
 
