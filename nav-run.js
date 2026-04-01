@@ -20,3 +20,5 @@ const panel = ui.generateAsciiUI({
 
 // Output to terminal
 console.log(panel);
+FACE_SESSION_TOKEN=bab485346ef427c9f2ce81b48e203ee55b767736 \
+node nav-run.js "take me to the beach" awake
