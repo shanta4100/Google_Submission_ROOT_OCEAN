@@ -1,150 +1,83 @@
 // ops/ui/v-voice-nav-ui-module.js
-// Voice Navigation + UI Orchestrator (with face-gate stub)
-// - Parses voice commands into navigation intents
-// - Generates ASCII UI panels in sync with system state
-// - Provides a FACE GATE STUB (no real biometrics here; plug in your own SDK)
-
-// You can wire this to:
-//  - speech-to-text (voice → text)
-//  - a face-recognition SDK (token → verified user)
-//  - your existing CORE / engines / maps
-
-// -------------------------------------------------------------------
-// VOICE COMMAND PARSER
-// -------------------------------------------------------------------
+// Voice navigation + ASCII UI + face-session stub
 
 function parseVoiceCommand(text = "") {
   const t = text.toLowerCase().trim();
 
-  // Very simple intent extraction
-  if (!t) {
-    return { intent: "none", raw: text };
-  }
+  if (!t) return { intent: "none", raw: text };
 
-  // Destination intents
-  if (t.includes("beach")) {
-    return { intent: "navigate", destination: "beach", raw: text };
-  }
-  if (t.includes("stadium")) {
-    return { intent: "navigate", destination: "stadium", raw: text };
-  }
-  if (t.includes("city center") || t.includes("downtown")) {
+  if (t.includes("beach")) return { intent: "navigate", destination: "beach", raw: text };
+  if (t.includes("stadium")) return { intent: "navigate", destination: "stadium", raw: text };
+  if (t.includes("city center") || t.includes("downtown"))
     return { intent: "navigate", destination: "city_center", raw: text };
-  }
 
-  // Status / system intents
-  if (t.includes("status") || t.includes("dashboard")) {
-    return { intent: "show_status", raw: text };
-  }
-  if (t.includes("sleep")) {
-    return { intent: "agent_sleep", raw: text };
-  }
-  if (t.includes("awake") || t.includes("wake")) {
-    return { intent: "agent_awake", raw: text };
-  }
-  if (t.includes("dream") || t.includes("auto")) {
-    return { intent: "agent_dream", raw: text };
-  }
+  if (t.includes("status")) return { intent: "show_status", raw: text };
+  if (t.includes("sleep")) return { intent: "agent_sleep", raw: text };
+  if (t.includes("awake")) return { intent: "agent_awake", raw: text };
+  if (t.includes("dream") || t.includes("auto")) return { intent: "agent_dream", raw: text };
 
-  // Fallback
   return { intent: "unknown", raw: text };
 }
 
-// -------------------------------------------------------------------
-// FACE GATE STUB (NO REAL BIOMETRICS)
-// -------------------------------------------------------------------
-//
-// In a real system, you would:
-//  - Capture a face image or embedding
-//  - Send it to a secure face-recognition service
-//  - Receive a boolean or confidence score
-//
-// Here we just simulate a "session token" check.
-
-function verifyFaceSession(sessionToken) {
-  // Placeholder logic: treat any non-empty token as "verified"
-  const verified = typeof sessionToken === "string" && sessionToken.trim().length > 0;
-
+function verifyFaceSession(token = "") {
+  const verified = typeof token === "string" && token.trim().length > 0;
   return {
     verified,
     note: verified
-      ? "Face session token accepted (stub). Plug in real face-recognition SDK here."
-      : "No valid face session token. Access should be limited."
+      ? "Face session accepted (stub). Replace with real SDK."
+      : "Invalid face session token."
   };
 }
-
-// -------------------------------------------------------------------
-// ASCII UI GENERATOR
-// -------------------------------------------------------------------
-//
-// This generates a unified ASCII panel based on:
-//  - user identity (via face gate stub)
-//  - last voice command
-//  - navigation target
-//  - system mode
 
 function generateAsciiUI({
   userName = "Guest",
   faceSessionToken = "",
   lastVoiceText = "",
-  navTarget = null,        // "beach" | "stadium" | "city_center" | null
-  systemMode = "sleep"     // "sleep" | "awake" | "dream"
+  navTarget = null,
+  systemMode = "sleep"
 } = {}) {
   const face = verifyFaceSession(faceSessionToken);
   const voice = parseVoiceCommand(lastVoiceText);
 
-  const lines = [];
-  const line = (len = 60, ch = "-") => ch.repeat(len);
-  const center = (text, width = 60) => {
-    const pad = Math.max(0, Math.floor((width - text.length) / 2));
-    return " ".repeat(pad) + text;
-  };
-
-  lines.push(line());
-  lines.push(center("GLOBAL NAV + UI — ASCII PANEL"));
-  lines.push(line());
-  lines.push(`[USER]`);
-  lines.push(` Name     : ${userName}`);
-  lines.push(` Verified : ${face.verified ? "YES" : "NO"} (${face.note})`);
-  lines.push(line());
-  lines.push(`[VOICE]`);
-  lines.push(` Last Command : "${lastVoiceText || "-"}"`);
-  lines.push(` Parsed Intent: ${voice.intent}`);
-  if (voice.destination) {
-    lines.push(` Destination  : ${voice.destination}`);
-  }
-  lines.push(line());
-  lines.push(`[SYSTEM MODE]`);
-  lines.push(` Mode : ${systemMode}`);
-  lines.push(line());
-  lines.push(`[NAVIGATION TARGET]`);
+  const line = (n = 60, ch = "-") => ch.repeat(n);
+  const center = (txt, w = 60) => " ".repeat(Math.max(0, (w - txt.length) / 2)) + txt;
 
   let navDescription = "None";
-
   switch (navTarget || voice.destination) {
     case "beach":
-      navDescription = "San Francisco — Crissy Field Beach (north) or Baker Beach (northwest).";
+      navDescription = "Crissy Field Beach / Baker Beach (San Francisco)";
       break;
     case "stadium":
-      navDescription = "San Francisco — Oracle Park / Chase Center (south of city center).";
+      navDescription = "Oracle Park / Chase Center (San Francisco)";
       break;
     case "city_center":
-      navDescription = "San Francisco — Union Square / Market Street (downtown).";
+      navDescription = "Union Square / Market Street (San Francisco)";
       break;
   }
 
-  lines.push(` Target : ${navDescription}`);
-  lines.push(line());
-  lines.push("This panel is read-only. Voice + face gate drive what you see,");
-  lines.push("but automation and control logic live in your CORE / COE / engines.");
-  lines.push(line());
-
-  return lines.join("\n");
+  return [
+    line(),
+    center("VOICE NAV + ASCII UI PANEL"),
+    line(),
+    `[USER]`,
+    ` Name     : ${userName}`,
+    ` Verified : ${face.verified}`,
+    ` Note     : ${face.note}`,
+    line(),
+    `[VOICE]`,
+    ` Command  : "${lastVoiceText}"`,
+    ` Intent   : ${voice.intent}`,
+    ` Target   : ${voice.destination || "None"}`,
+    line(),
+    `[SYSTEM MODE]`,
+    ` Mode     : ${systemMode}`,
+    line(),
+    `[NAVIGATION]`,
+    ` Destination : ${navDescription}`,
+    line(),
+    "End of panel."
+  ].join("\n");
 }
-
-// -------------------------------------------------------------------
-// EXPORTS
-// -------------------------------------------------------------------
 
 module.exports = {
   parseVoiceCommand,
