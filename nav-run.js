@@ -25,4 +25,5 @@ node nav-run.js "take me to the beach" SESSION123 awake
 node nav-run.js "take me to the stadium" SESSION123 awake
 node nav-run.js "show me the status" SESSION123 sleep
 node nav-run.js "auto mode" SESSION123 dream
+node nav-run.js "show me the status" bab485346ef427c9f2ce81b48e203ee55b767736 awake
 
