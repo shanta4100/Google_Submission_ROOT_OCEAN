@@ -8,7 +8,7 @@ const token = process.argv[3] || "";
 const mode = process.argv[4] || "sleep";
 
 const panel = ui.generateAsciiUI({
-  userName: "Arifur",
+  userName: process.env.USER_NAME || "Arifur",
   faceSessionToken: token,
   lastVoiceText: voice,
   systemMode: mode
