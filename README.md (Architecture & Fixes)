@@ -1,0 +1,19 @@
+# Google_Submission_ROOT_OCEAN
+## SSGPT6 Digital Civilization Framework
+
+### ⚠️ IMPORTANT: Fix 'ENOTEMPTY' Error
+[span_19](start_span)If you see an `ENOTEMPTY` error during installation, your local directory is corrupted[span_19](end_span).
+[span_20](start_span)Run these commands to fix it[span_20](end_span):
+1. `rm -rf node_modules`
+2. `rm -f pnpm-lock.yaml`
+3. `pnpm install`
+
+### [span_21](start_span)Implementation Phases[span_21](end_span)
+- **Phase 1:** Media + Intelligence
+- **Phase 2:** Governance + Security
+- **Phase 3:** Civilization Systems
+- **Phase 4:** Macro Expansion
+- **Phase 5:** Meta Evolution
+
+### Identity Statement
+[span_22](start_span)[span_23](start_span)SSGPT6 is a structured, ethical, multi-layered digital civilization architected under GNAIAAAC LLC[span_22](end_span)[span_23](end_span).
