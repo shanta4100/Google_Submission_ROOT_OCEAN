@@ -1,16 +1,28 @@
-# GNAIAAAC Root Ocean / Pure Water
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-**Project Overview:**  
-This repository contains all materials related to the GNAIAAAC LLC Root Ocean / Pure Water AI-driven project. All outputs—including reports, dashboards, simulations, models, visualizations, and automated workflows—have been generated independently by a solo founder using AI tools (SSCHATGPT6 and other AI modules).
+  <url>
+    <loc>https://shanta4100.github.io/ssgpt6.com/</loc>
+    <lastmod>2026-04-04</lastmod>
+    <priority>1.0</priority>
+  </url>
 
-## Repository Contents
+  <url>
+    <loc>https://shanta4100.github.io/ssgpt6.com/about.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <priority>0.8</priority>
+  </url>
 
-- **docs/** – Executive PDF report, Word master document, budget Excel, and PPT deck.
-- **demos/** – Dashboard screenshots and workflow diagrams demonstrating technical feasibility.
-- **scripts/** – Python scripts used to generate reports, budgets, and presentations.
+  <url>
+    <loc>https://shanta4100.github.io/ssgpt6.com/contact.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <priority>0.8</priority>
+  </url>
 
-## Technical Feasibility
-The AI-driven workflows and simulations demonstrate responsiveness, accuracy, and automation, proving the project’s capability even as a solo AI founder.
+  <url>
+    <loc>https://shanta4100.github.io/ssgpt6.com/blog.html</loc>
+    <lastmod>2026-04-04</lastmod>
+    <priority>0.7</priority>
+  </url>
 
-## License
-[MIT License](LICENSE)
+</urlset>
