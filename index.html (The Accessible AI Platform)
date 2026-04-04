@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSGPT6 | Video & Music Generator</title>
+  <style>
+    :root {
+      --bg: #040b16;
+      --gold: #d4b15a;
+      --rainbow: linear-gradient(90deg,#00b7ff,#00ffd5,#7dff65,#ffd84d,#ff914d,#ff4fa3,#9b6bff);
+      --text: #eef4ff;
+    }
+    body { background: var(--bg); color: var(--text); font-family: Arial, sans-serif; text-align: center; }
+    .brand-company { font-weight: 900; background: var(--rainbow); -webkit-background-clip: text; color: transparent; }
+    .vbtn { background: var(--gold); border-radius: 14px; padding: 14px 18px; cursor: pointer; font-weight: 800; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SSGPT6</h1>
+    <div class="brand-company">GNAIAAAC LLC</div>
+  </header>
+  <main>
+    <h2>AI & Tiny AI Sleeping Agent</h2>
+    <div class="hero-water">Global Pure Water 💦 Solution • Zero Carbon</div>
+    
+    <div class="voice-hero">
+      <h3>🎤 Voice + Typing Support</h3>
+      <button class="vbtn" onclick="startVoice()">Start</button>
+      <button class="vbtn" onclick="stopVoice()">Stop</button>
+    </div>
+  </main>
+  <footer>
+    <p>© 2026 GNAIAAAC LLC | Founder: Arifur Rahman Shanta</p>
+  </footer>
+</body>
+</html>
