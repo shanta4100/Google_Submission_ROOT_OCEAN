@@ -1,0 +1,11 @@
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm' # High-performance caching for your GNAIAAAC projects
+
+    - name: Install dependencies
+      run: npm install # This installs based on your package.json
+
+    - name: Security Audit
+      run: npm audit --audit-level=high # Fails the build if high-severity issues remain
