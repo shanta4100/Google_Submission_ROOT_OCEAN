@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>SSGPT6</title>
+const http = require('http');
 
-  <!-- Google Verification -->
-  <meta name="google-site-verification" content="pwr_k-AJ-9OV9w6FCX3cTA07lJifO-BpGbZDcYxlBbM" />
+const port = process.env.PORT || 3000;
 
-  <!-- Other head content -->
-</head>
-<body>
-  <h1>Welcome to SSGPT6</h1>
-  <p>This is your homepage. You can add more content here.</p>
-</body>
-</html>
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Global AI Black Box focuses on AI for planetary wellbeing, quantum-ready machine learning, global water and climate analytics, autonomous coordination engines, and civilization-scale SaaS infrastructure.');
+});
+
+server.listen(port, () => {
+  console.log(`Server running at port ${port}`);
+});
